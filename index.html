@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html ng-app="myApp">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    
+    <title>stockist</title>
+<link rel="shortcut icon" href="http://faviconist.com/icons/5558accaaefe07a6e5cd9565980e9204/favicon.ico" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" media="all">
+    
+<style>
+    @media print {
+  * { margin: 0 !important; padding: 0 !important; }
+  #controls, .footer, .footerarea{ display: none; }
+  html, body {
+    /*changing width to 100% causes huge overflow and wrap*/
+    height:100%; 
+    overflow: hidden;
+    background: #FFF; 
+    font-size: 9.5pt;
+  }
+</style>    
+  
+</head>
+
+<body>
+    
+<script src=/js/angular.min.js></script> <!-- Latest compiled and minified CSS -->
+<script src=/js/angular-route.min.js></script> <!-- route for angular -->
+<link href="/angular-xeditable-0.1.8/css/xeditable.css" rel="stylesheet"> <!-- xeditable -->
+<script src="/angular-xeditable-0.1.8/js/xeditable.js"></script><!-- xeditable -->
+<script src="/js/ui-bootstrap-tpls-0.13.0.min.js"></script> <!-- for in-place typeahead -->
+
+<script type="text/javascript" src=/js/app.js></script>
+<script type="text/javascript" src=/js/inventoryCtrl.js></script>
+<script type="text/javascript" src=/js/recipeCtrl.js></script>
+
+    <!-- tabs for items and recipes and batches -->
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">in Stockist</a>
+        </div>    
+        <ul class="nav navbar-nav">
+            <li ng-class="{active: $route.current.activetab == '#/inventory'}"><a href="#/inventory">inventory</a></li>
+            <li ng-class="{active: $route.current.activetab == '#/recipes'}"><a href="#/recipes">recipes</a></li>
+            <li ng-class="{active: $route.current.activetab == '#/batches'}"><a href="#/batches">batches</a></li>
+        </ul>
+  </div><!-- /.container-fluid -->
+</nav>
+<!-- content popluates in here -->
+
+<div class="container-fluid">
+    
+    <div ng-view></div>
+        
+</div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+# disable directory browsing
+        
+        Options ExecCGI Includes IncludesNOEXEC SymLinksIfOwnerMatch -Indexes
+        
+        # enable directory browsing
+# For security reasons, Option all cannot be overridden.
+#        Options All +Indexes
+        Options ExecCGI Includes IncludesNOEXEC SymLinksIfOwnerMatch +Indexes
+        
+AuthName "Stockist"
+        AuthType Basic
+        AuthUserFile /home6/florapor/.htpasswds/htpasswd
+        Require valid-user

@@ -1,0 +1,99 @@
+
+<div class="row">
+
+    <!-- button to add recipe -->
+    <div class="hidden-print" >
+    <a href="" ng-click="addone=true">add recipe</a>
+    <input ng-show="addone" type="text" name="recipe_name" placeholder="recipe name" ng-model="recipe_name" >
+    <button  ng-show="addone" ng-click="addRecipe()" class="btn btn-primary">+</button>
+        - or choose from:
+        <select ng-model="recipe" ng-options="recipe.name for recipe in recipes"  ng-change="selectRecipe(recipe)" bs-typeahead> </select>
+    </div>
+
+</div>
+<div class="row" ng-show="recipe">
+  <div class="col-md-4"><h2>{{recipe.name}}</h2> </div>
+  <div class="col-md-6">NOTES: <input ng-model="recipe" ng-change="updateRecipeNotes()" type="textarea" name="notes">{{srecipe.notes}}</div>  
+</div>
+
+<!-- ADD ITEM TO RECIPE      -->
+<div  ng-show="recipe"  class="hidden-print" >
+    add <select ng-model="additem_id" ng-options="item.name for item in items" ng-change="addItemToRecipe(additem_id)"></select> to recipe
+</div>
+<hr/>
+<!-- RECIPE COSTS HERE -->
+<span ng-if="recipeItems.length>0" >
+    {{recipeItems.length}} {{recipeItems.length == 1 ? "item" : "items" }} in recipe.
+    <mark> Total recipe Cost {{ calculateRecipeCost() || 0  | currency }} </mark>s
+    &nbsp;&nbsp;&nbsp;&nbsp;Total Recipe Amount {{ calculateRecipeAmounts()|| "uncalculated"  }} {{recipe_units}}
+	<span ng-if="containerCount>0">
+    &nbsp;&nbsp;Makes {{containerCount}} {{containerCount == 1 ? "container" : "containers"}}
+	at ${{recipeCostPerUnit}} per container
+  </span>
+
+<!--  BATCH COSTS CALCULATED AND DISPLAYED HERE -->
+  <div >
+    calculate for a batch of <span buttons="no" e-style="width: 30px" editable-text="batch.multiplier" onaftersave="calculateBatch()">{{batch.multiplier}}</span>
+     <span ng-if="batch.multiplier !=1"> {{batch.multiplier == 1 ? "recipe" : "recipes"}} -->
+   would cost {{ batch.multiplier * recipeTotalCost | currency }}
+    and {{ batch.multiplier * recipeTotalAmount }} {{batch.units}} and fill {{ batch.multiplier * containerCount }} containers</span>
+</div>
+<!-- CHECK INVENTORY FOR BATCH MULTIPLIED AMOUNTS DISPLAY ANY DEFICIENCIES HERE -->
+</span>
+<!-- RECIPE DETAILS HERE -->
+<table class="table table-bordered" ng-if="recipeItems.length >= 1" >
+    <thead>
+      <tr>
+        <th width="20" class="hidden-print" ><center>-</center></th>
+	<th style="display: none;"  class="hidden-print" >index</th>
+        <th>
+          <a class="hidden-print" href="" ng-click="orderByField='name'; reverseSort = !reverseSort">
+          Item Name <span ng-show="orderByField == 'name'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a><span class="visible-print-inline">Item Name</span>
+        </th>
+        <th>
+          <a class="hidden-print" href="" ng-click="orderByField='amount'; reverseSort = !reverseSort">
+            amount <span ng-show="orderByField == 'amount'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a><span class="visible-print-inline">amount</span>
+        </th>
+        <th>
+          <a class="hidden-print" href="" ng-click="orderByField='type'; reverseSort = !reverseSort">
+          type <span ng-show="orderByField == 'type'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a><span class="visible-print-inline">type</span>
+        </th>
+        <th>
+          <a class="hidden-print" href="" ng-click="orderByField='cost'; reverseSort = !reverseSort">
+          cost per<span ng-show="orderByField == 'cost'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a><span class="visible-print-inline">cost per</span>
+        </th>
+        <th>
+          <a class="hidden-print" href="" ng-click="orderByField='vendor'; reverseSort = !reverseSort">
+          vendor+part<span ng-show="orderByField == 'vendor'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a><span class="visible-print-inline">vendor+part</span>
+        </th>
+        <th>
+          <a class="hidden-print" href="" ng-click="orderByField='total'; reverseSort = !reverseSort">
+          total <span ng-show="orderByField == 'total'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a><span class="visible-print-inline">total</span>
+        </th>
+        <th class="hidden-print" >
+          <a href="" ng-click="orderByField='stockqty'; reverseSort = !reverseSort">
+          stockQty <span ng-show="orderByField == 'stockqty'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="recipeitem in recipeItems|orderBy:orderByField:reverseSort" ng-if="recipeItems.length >= 1">
+	<td  class="hidden-print" ><a href='' ng-click="removeRecipeItem( {'recipe_id':recipeitem.recipe_id,'item_id':recipeitem.item_id } )" ><img src="deleteme.png" width=20 height=20 id="deleteme" ></img></a></td>
+        <td  class="hidden-print" style="display: none;">{{$index}}</td>
+	<td ng-class="{danger: recipeitem.stockqty < (recipeitem.amount * batch.multiplier) , success: recipeitem.stockqty >= (recipeitem.amount * batch.multiplier)} ">{{recipeitem.name}}</td>
+        <td  buttons="no" editable-text="recipeitem.amount" onaftersave="updateRecipeItem( {'recipe_id':recipe_id,'item_id':recipeitem.item_id,'value':recipeitem.amount} )">{{(recipeitem.amount * batch.multiplier)}} {{recipeitem.unit}}</td>
+        <td>{{recipeitem.type}}</td>
+        <td>{{recipeitem.cost}} per {{recipeitem.unit}}</td>
+        <td>{{recipeitem.vendor}}+{{recipeitem.vendorpartno}}</td>
+        <td>{{recipeitem.cost * recipeitem.amount | currency }}</td>
+	<td ng-class="{danger: recipeitem.stockqty < recipeitem.amount , success: recipeitem.stockqty >= recipeitem.amount} " ><span class="hidden-print"  >{{recipeitem.stockqty}}</span></td>
+      </tr>
+    </tbody>
+  </table>

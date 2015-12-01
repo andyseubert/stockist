@@ -1,0 +1,109 @@
+
+<button class="btn btn-link" ng-click="showAdd=true" ng-hide="showAdd">+ add new item</button>
+
+<div class="row">
+	<div class="col-md-2">Total Inventory {{ calculateTotalCost() || 0  | currency }} </div>
+</div>
+
+<button class="btn btn-link" ng-click="showAdd=false" ng-show="showAdd"> -- hide -- </button>
+    <table ng-show="showAdd" class="table table-bordered">
+	<thead>
+	<tr>
+	    <th>name</th>
+	    <th width="4">qty</th>
+	    <th>vendor</th>
+	    <th>vendorpartno</th>
+	    <th>cost</th>
+	    <th>unit</th>
+	    <th>type</th>
+	    <th>origin</th>
+	    <th>description</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+	    <td><input type="text" ng-model="newitem.name" ></td>
+	    <td><input type="text" ng-model="newitem.quantity" size="4"></td>
+	    <td><input type="text" ng-model="newitem.vendor"></td>
+	    <td><input type="text" ng-model="newitem.vendorpartno" size="6"></td>
+	    <td><input type="text" ng-model="newitem.cost" size="4"></td>
+	    <td><input type="text" ng-model="newitem.unit" size="6"></td>
+	    <td><input type="text" ng-model="newitem.type"></td>
+	    <td><input type="text" ng-model="newitem.origin"></td>
+	    <td><input type="text" ng-model="newitem.description"></td>
+	</tr>
+	<tr>
+	    <td colspan="9"><center><button class="btn btn-success btn-xs btn-block" ng-click="addItem()">s u b m i t</a></center></td>
+	</tr>
+	</tbody>
+    </table>
+    
+
+<table class="table table-bordered" >
+    <thead>
+      <tr>
+        <th width="20" class="text-center">-</th>
+	<th ng-hide="1">index</th>
+        <th>
+          <a href="" ng-click="orderByField='quantity'; reverseSort = !reverseSort">
+          QTY <span ng-show="orderByField == 'quantity'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a>
+        </th>
+	<th>
+          <a href="" ng-click="orderByField='unit'; reverseSort = !reverseSort">
+          unit <span ng-show="orderByField == 'unit'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a>
+        </th>
+	<th>
+          <a href="" ng-click="orderByField='name'; reverseSort = !reverseSort">
+          Item Name <span ng-show="orderByField == 'name'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a>
+        </th>
+	<th>
+          <a href="" ng-click="orderByField='vendor'; reverseSort = !reverseSort">
+          Vendor <span ng-show="orderByField == 'vendor'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a>
+        </th>
+	<th>
+          <a href="" ng-click="orderByField='vendorpartno'; reverseSort = !reverseSort">
+          Vendor Part <span ng-show="orderByField == 'vendorpartno'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a>
+        </th>
+	    <th>
+          <a href="" ng-click="orderByField='type'; reverseSort = !reverseSort">
+          Type <span ng-show="orderByField == 'type'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a>
+        </th>
+	<th>
+          <a href="" ng-click="orderByField='cost'; reverseSort = !reverseSort">
+          costPer <span ng-show="orderByField == 'cost'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a>
+        </th>
+	<th>
+          <a href="" ng-click="orderByField='origin'; reverseSort = !reverseSort">
+          origin <span ng-show="orderByField == 'origin'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a>
+        </th>
+	<th>
+          <a href="" ng-click="orderByField='description'; reverseSort = !reverseSort">
+          description <span ng-show="orderByField == 'description'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+	<tr ng-repeat="item in items|orderBy:orderByField:reverseSort">
+	    <td><a href=''  ng-click="deleteItem( {'item_id':item.item_id } )"><img src="deleteme.png" width=20 height=20 id="deleteme"/></a></td>
+	    <td ng-hide="1">{{$index}}</td>
+	    <td e-style="width: 30px" editable-text="item.quantity" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'quantity','value':item.quantity} )">{{ item.quantity }}</td>
+	    <td editable-text="item.unit" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'unit','value':item.unit} )">{{ item.unit }}</td>
+	    <td editable-text="item.name"  buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'name','value':item.name} )">{{ item.name }}</td>
+	    <td editable-text="item.vendor" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'vendor','value':item.vendor} )">{{ item.vendor }}</td>
+	    <td editable-text="item.vendorpartno" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'vendorpartno','value':item.vendorpartno} )">{{ item.vendorpartno }}</td>
+	    <td editable-text="item.type" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'type','value':item.type} )">{{ item.type }}</td>
+	    <td editable-text="item.cost" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'cost','value':item.cost} )">{{ item.cost | currency }}</td>
+	    <td editable-text="item.origin" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'origin','value':item.origin} )">{{ item.origin }}</td>
+	    <td editable-text="item.description" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'description','value':item.description} )">{{ item.description }}</td>
+	</tr>
+    </tbody>
+</table>
