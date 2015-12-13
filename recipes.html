@@ -7,13 +7,17 @@
     <input ng-show="addone" type="text" name="recipe_name" placeholder="recipe name" ng-model="recipe_name" >
     <button  ng-show="addone" ng-click="addRecipe()" class="btn btn-primary">+</button>
         - or choose from:
+   <!-- CHOOSE RECIPE HERE -->
         <select ng-model="recipe" ng-options="recipe.name for recipe in recipes"  ng-change="selectRecipe(recipe)" bs-typeahead> </select>
     </div>
 
 </div>
 <div class="row" ng-show="recipe">
   <div class="col-md-4"><h2>{{recipe.name}}</h2> </div>
-  <div class="col-md-6">NOTES: <input ng-model="recipe" ng-change="updateRecipeNotes()" type="textarea" name="notes">{{srecipe.notes}}</div>  
+  <div class="col-md-6 col-md-offset-7" >
+    NOTES: <textarea ng-model="recipe.notes" ng-change="updateRecipeNotes()" name="notes" e-rows="12" e-cols="60" style="margin: 0px; width: 415px; height: 60px;">{{srecipe.notes}}</textarea>
+
+  </div>  
 </div>
 
 <!-- ADD ITEM TO RECIPE      -->
@@ -24,7 +28,7 @@
 <!-- RECIPE COSTS HERE -->
 <span ng-if="recipeItems.length>0" >
     {{recipeItems.length}} {{recipeItems.length == 1 ? "item" : "items" }} in recipe.
-    <mark> Total recipe Cost {{ calculateRecipeCost() || 0  | currency }} </mark>s
+    <mark> Total recipe Cost {{ calculateRecipeCost() || 0  | currency }} </mark>
     &nbsp;&nbsp;&nbsp;&nbsp;Total Recipe Amount {{ calculateRecipeAmounts()|| "uncalculated"  }} {{recipe_units}}
 	<span ng-if="containerCount>0">
     &nbsp;&nbsp;Makes {{containerCount}} {{containerCount == 1 ? "container" : "containers"}}
@@ -37,6 +41,9 @@
      <span ng-if="batch.multiplier !=1"> {{batch.multiplier == 1 ? "recipe" : "recipes"}} -->
    would cost {{ batch.multiplier * recipeTotalCost | currency }}
     and {{ batch.multiplier * recipeTotalAmount }} {{batch.units}} and fill {{ batch.multiplier * containerCount }} containers</span>
+<!-- MAKE RECORD OF BATCH PRODUCED -->
+  <a ng-click="makeBatch()">MAKE THIS BATCH</a>
+
 </div>
 <!-- CHECK INVENTORY FOR BATCH MULTIPLIED AMOUNTS DISPLAY ANY DEFICIENCIES HERE -->
 </span>

@@ -33,7 +33,7 @@ angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filte
             })
             .error(function(result, status){
                 $scope.recipes = status;
-                $log.log(status);
+                $log.log("ERROR : ", status);
 
             });
 
@@ -52,32 +52,30 @@ angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filte
         $scope.batch.multiplier=1;
 
         // should only be sending me the recipe_id as { 'recipe_id':## }
-        $log.log("attempting to select recipe by id here");
+        //$log.log("attempting to select recipe by id here");
         $log.log('data.recipe_id received : ' + data.recipe_id);
         $http.post('/data/listrecipeitems.php',{'recipe_id':data.recipe_id})
             .success(function(result){
                 if (angular.isObject(result)) {  // crazy ?
                     $scope.recipeItems=result;
-                    $log.log("result from choosing: '" + $scope.recipeItems + "'");
-                    $log.log("length of result: " + $scope.recipeItems.length);
+                    //$log.log("reciptItems from data: " , $scope.recipeItems );
+                    //$log.log("length of result: " + $scope.recipeItems.length);
                     $scope.calculateStockQty();
-                }else{ // brand new recipe
-
-
-
+                }else{ // error or maybe brand new recipe
+                    $log.log("problem from data: " + result);
                 }
             });
     };
 
 
-    // add recipe  ADD RECIPE NOT WORKING CORRECTLY ******* <<-----------
+    // add recipe 
     $scope.addRecipe = function(){
         $scope.addone=false;
         if ($scope.recipe_name !=='') {
         // add recipe - receive recipe object
         $http.post('/data/addrecipe.php',{ 'recipe_name':$scope.recipe_name })
         .success(function(result){
-            $log.log('result from addrecipe.php:' + result);
+            //$log.log('result from addrecipe.php:' + result);
             $scope.recipe = {
     			'recipe_id':result,
     			'name':$scope.recipe_name,
@@ -88,14 +86,14 @@ angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filte
 			};
             //$scope.recipe=result;
             $scope.recipes.push($scope.recipe);
-            $log.info("scope.recipe is : " + $scope.recipe);
+            //$log.info("scope.recipe is : " + $scope.recipe);
             //$log.info('scope.recipe.name is '+ $scope.recipe_name);
             $scope.selectRecipe( { 'recipe_id':result } );
 
         })
 
         .error(function(result, status){
-            $log.log(result + status);
+            $log.log("error: " , result , status);
             // duplicate name needs feedback
         });
 
@@ -186,7 +184,7 @@ angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filte
 // UPDATE RECIPE NOTES
     $scope.updateRecipeNotes=function(){
 
-        return $http.post('/data/updaterecipenotes.php',{ 'recipe_id':$scope.recipe.recipe_id })
+        return $http.post('/data/updaterecipenotes.php',{ 'recipe_id':$scope.recipe.recipe_id,'notes':$scope.recipe.notes })
 
         .success(function(result){
             $log.log(result);
@@ -213,12 +211,13 @@ angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filte
     // GATHER THE QUANTITY FOR EACH recipeItem that is  "in stock"
     $scope.calculateStockQty=function(){
         for(var i = 0; i < $scope.recipeItems.length; i++){
-            $log.log ("trying to calculate in stock qty");
+            //$log.log ("trying to calculate in stock qty");
+            //$log.log("items : " , $scope.recipeItems);
             var product = $scope.recipeItems[i];
             var matchedItem = $filter('filter')($scope.items, function(value, index) {return value.item_id == product.item_id;})[0];
             if (matchedItem) {
-                product.stockqty = parseInt(matchedItem.quantity,10 );
-                //$log.log(matchedItem.name + " qty: " + matchedItem.quantity);
+                product.stockqty = parseFloat($scope.recipeItems[i].quantity,10 );
+                //$log.log(matchedItem.name + " qty: " + $scope.recipeItems[i].quantity);
                 //$log.log(product.name + " qty:" + product.stockqty);
             }
         }
@@ -295,10 +294,17 @@ $scope.calculateBatch=function(){
 
 // SAVE BATCH TO DATABASE
  // create the batch
- //  createbatch.php
- //  add the items to the batch
- // just loop over the recipe items and for each one add it and set the amount to the amount * batch.multiplier
+ //  makebatch.php
+$scope.makeBatch=function(){
+    return $http.post('/data/makebatch.php',{ 'recipe':$scope.recipe,'recipe_items':$scope.recipeItems,'multiplier':$scope.batch.multiplier})
 
+        .success(function(result){
+            //$log.log(result);
+            //$log.log("recipe before select: " , $scope.recipe);
+            $scope.selectRecipe($scope.recipe);
+        });
+    return;
+}
 
 
 
