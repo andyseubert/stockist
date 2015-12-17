@@ -4,14 +4,14 @@
     <div class="hidden-print" >
         - Choose Batch to Display :
         <!-- CHOOSE RECIPE HERE -->
-        <select ng-model="batch" ng-options="batch.name for batch in batches"  ng-change="selectBatch(batch)" bs-typeahead> </select>
+        <select ng-model="batch" ng-options="batch.batch_name for batch in batches"  ng-change="selectBatch(batch)" bs-typeahead> </select>
     </div>
 
 </div>
 <div class="row" ng-show="batch">
-    <div class="col-md-4"><h2>{{batch.name}}</h2> </div>
+    <div class="col-md-4"><h2>{{batch.batch_name}}</h2> </div>
     <div class="col-md-6 col-md-offset-7" >
-        NOTES: <textarea ng-model="batch.notes" ng-change="updateBatchNotes()" name="notes" e-rows="12" e-cols="60" style="margin: 0px; width: 415px; height: 60px;">{{batch.notes}}</textarea>
+        NOTES: <textarea ng-model="batch.notes" ng-change="updateBatchNotes()" name="batch_notes" e-rows="12" e-cols="60" style="margin: 0px; width: 415px; height: 60px;">{{batch.batch_notes}}</textarea>
 
     </div>
 </div>

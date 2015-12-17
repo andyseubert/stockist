@@ -15,6 +15,12 @@ myApp.run(function(editableOptions,editableThemes) {
 myApp.config(function($routeProvider){
     
     $routeProvider
+    
+    .when('/',{
+        templateUrl:'/recipes.html',
+        controller:'recipeCtrl'
+    })
+
     .when ('/inventory',{
         templateUrl:'/listitems.html',
         controller:'inventoryItemCtrl'
@@ -23,9 +29,9 @@ myApp.config(function($routeProvider){
         templateUrl:'/recipes.html',
         controller:'recipeCtrl'
     })
-           .when('/',{
-        templateUrl:'/recipes.html',
-        controller:'recipeCtrl'
+           .when('/batches',{
+        templateUrl:'/batches.html',
+        controller:'batchCtrl'
     })
 });
 
