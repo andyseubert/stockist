@@ -299,7 +299,7 @@ $scope.makeBatch=function(){
     return $http.post('/data/makebatch.php',{ 'recipe':$scope.recipe,'recipe_items':$scope.recipeItems,'multiplier':$scope.batch.multiplier})
 
         .success(function(result){
-            //$log.log(result);
+            $log.log(result);
             //$log.log("recipe before select: " , $scope.recipe);
             $scope.selectRecipe($scope.recipe);
         });
