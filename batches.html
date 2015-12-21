@@ -15,7 +15,7 @@
 
     </div>
 </div>
-<div class="row" ng-show="batch">
+<div class="row" ng-show="batch"> <!-- BATCH DATE HERE -->
     <div class="col-md-4">made on : {{ batch.batch_date }}</div>
 </div>
 
@@ -69,3 +69,18 @@
       </tr>
     </tbody>
   </table>
+
+<div class="row" ng-show="batch"> <!-- BATCH CALCULATIONS HERE -->
+    <div class="col-md-6">
+    {{batchItems.length}} {{batchItems.length == 1 ? "item" : "items" }} in batch.
+    <mark> Total batch Cost {{ calculateBatchCost() || 0  | currency }} </mark>
+    &nbsp;&nbsp;&nbsp;&nbsp;Total batch Amount {{ calculateBatchAmounts()|| "uncalculated"  }} {{batch_units}}
+	</div>
+	<div class="col-md-6">
+	<span ng-if="containerCount>0">
+    &nbsp;&nbsp;Made {{containerCount}} {{containerCount == 1 ? "container" : "containers"}}
+	at ${{batchCostPerUnit}} per container
+  	</span>
+  	</div>
+
+</div>
