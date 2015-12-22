@@ -81,10 +81,10 @@ if (!$result = $conn->query($sql)){
 	    	 . mysqli_real_escape_string($conn,$item->vendorpartno).'"'
 	    	 .')';
 	}
-	// print_r('INSERT INTO batch_items (batch_id, item_id, amount, units, cost, description, name, type, origin, vendor, vendorpartno) VALUES '.implode(',', $insert_sql));
+	 print_r('INSERT INTO batch_items (batch_id, item_id, amount, unit, cost, description, name, type, origin, vendor, vendorpartno) VALUES '.implode(',', $insert_sql));
 
-	$insert_result = $conn->query('INSERT INTO batch_items (batch_id, item_id, amount, units, cost, description, name, type, origin, vendor, vendorpartno) VALUES '.implode(',', $insert_sql));
-	// echo "insert result is : " , $insert_result,"\n";
+	$insert_result = $conn->query('INSERT INTO batch_items (batch_id, item_id, amount, unit, cost, description, name, type, origin, vendor, vendorpartno) VALUES '.implode(',', $insert_sql));
+	 echo "insert result is : " , $insert_result,"\n";
 
 
 $update_cases="";
