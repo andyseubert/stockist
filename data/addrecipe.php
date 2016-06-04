@@ -15,10 +15,10 @@ $insertsql="INSERT INTO recipes (name) VALUES ( \"".$recipe_name."\")";
 $conn->query($insertsql);
 
 if ($conn->error) { printf ("error %s",$conn->error); }
-//return recipt_id
-echo $conn->insert_id;
 
 // return recipe_id
+echo $conn->insert_id;
+
 
 
 

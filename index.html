@@ -9,29 +9,26 @@
     <title>stockist</title>
 <!--<link rel="shortcut icon" href="http://faviconist.com/icons/5558accaaefe07a6e5cd9565980e9204/favicon.ico" />-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" media="all">
-    
-<style>
-    @media print {
-  * { margin: 0 !important; padding: 0 !important; }
-  #controls, .footer, .footerarea{ display: none; }
-  html, body {
-    /*changing width to 100% causes huge overflow and wrap*/
-    height:100%; 
-    overflow: hidden;
-    background: #FFF; 
-    font-size: 9.5pt;
-  }
-</style>    
-  
-</head>
 
-<body>
-    
+
+<script src="https://code.jquery.com/jquery-latest.min.js"
+        type="text/javascript"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script src=/js/angular.min.js></script> <!-- Latest compiled and minified CSS -->
 <script src=/js/angular-route.min.js></script> <!-- route for angular -->
 <link href="/angular-xeditable-0.1.8/css/xeditable.css" rel="stylesheet"> <!-- xeditable -->
 <script src="/angular-xeditable-0.1.8/js/xeditable.js"></script><!-- xeditable -->
 <script src="/js/ui-bootstrap-tpls-0.13.0.min.js"></script> <!-- for in-place typeahead -->
+<script src="/js/bootbox.min.js"></script> <!-- for prompt dialog boxes -->
+<script src="/js/ngBootbox.js"></script> <!-- for prompt dialog boxes -->
+
 
 <script type="text/javascript" src=/js/app.js></script>
 <script type="text/javascript" src=/js/inventoryCtrl.js></script>
@@ -39,6 +36,25 @@
 <script type="text/javascript" src=/js/batchCtrl.js></script>
 
     <!-- tabs for items and recipes and batches -->
+
+<style>
+    @media print {
+  * { margin: 0 !important; padding: 0 !important; }
+  #controls, .footer, .footerarea{ display: none; }
+}
+  html, body {
+    /*changing width to 100% causes huge overflow and wrap*/
+    height:100%; 
+    // overflow: hidden;
+    background: #FFF; 
+    font-size: 9pt;
+    padding-left: 5; 
+  }
+</style>    
+  
+</head>
+
+<body>
 
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -54,7 +70,7 @@
 </nav>
 <!-- content popluates in here -->
 
-<div class="container-fluid">
+<div class="container-fluid" style="padding-left:25px;">
     
     <div ng-view></div>
         

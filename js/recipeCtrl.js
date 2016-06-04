@@ -1,5 +1,5 @@
 
-angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filter', function($scope,$log,$http,$filter){
+angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filter','$ngBootbox', function($scope,$log,$http,$filter,$ngBootbox){
 
 
 
@@ -46,7 +46,7 @@ angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filte
 
     //display chosen recipe
     $scope.selectRecipe =function(data){
-        // reset the list of items
+        // populates the list of items from the given recipe_id
         $scope.recipeItems=[];
         //reset the batch
         $scope.batch.multiplier=1;
@@ -187,7 +187,7 @@ angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filte
         return $http.post('/data/updaterecipenotes.php',{ 'recipe_id':$scope.recipe.recipe_id,'notes':$scope.recipe.notes })
 
         .success(function(result){
-            $log.log(result);
+            //$log.log(result);
         });
 
 
@@ -260,13 +260,47 @@ angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filte
         return $scope.recipeTotalAmount;
 
     }
-        // ADD/UPDATE NOTES TO RECIPE
-        // updaterecipenotes.php
+       
 
 
         // change recipe name
 
         // duplicate recipe
+$scope.copyRecipe=function(){
+    $ngBootbox.prompt('Enter New Recipe Name')
+    .then(function(result) {
+        $log.log('Prompt returned: ' + result);
+
+        // call out to copyrecipe.php
+        // send {'old_recipe_name':'$scope.recipe.name','new_recipe_name':'" + result + "','recipe_notes':'$scope.recipe.notes'}
+        $tempdata={'recipe_id':$scope.recipe.recipe_id , 'old_recipe_name':$scope.recipe.name,'new_recipe_name':result,'recipe_notes':$scope.recipe.notes}
+        //$log.log("will post ", $tempdata);
+        return $http.post('/data/copyrecipe.php',$tempdata)
+            .success(function(result){
+                $log.log(result);
+                $scope.$newrecipe_id=result;
+
+            });
+    // RELOAD RECIPES FOR CHOOSING
+        $http.get('/data/getrecipes.php')
+                .success(function(result){
+                    $scope.recipes = result; 
+                    $log.log($scope.recipes);
+                })
+                .error(function(result, status){
+                    $scope.recipes = status;
+                    $log.log("ERROR : ", status);
+
+                });
+
+        $scope.selectRecipe( { 'recipe_id':$scope.$newrecipe_id } );
+
+
+        return;
+    }, function() {
+        console.log('Prompt dismissed!');
+    });
+}
 
 
 // BATCH FUNCTIONS BELOW HERE

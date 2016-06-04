@@ -9,16 +9,26 @@
 
 </div>
 <div class="row" ng-show="batch">
-    <div class="col-md-4"><h2>:: {{ batch.batch_name }} ::</h2> </div>
-    <div class="col-md-6 col-md-offset-6" >
+    <div class="col-md-6"><h2><small>batch of </small>{{ batch.batch_name }} <small>{{ batch.batch_date }}</small></h2></div>
+    <div class="col-md-6 col-md-offset-5" >
         NOTES: <textarea ng-model="batch.batch_notes" ng-change="updateBatchNotes()" name="batch_notes" e-rows="12" e-cols="60" style="margin: 0px; width: 415px; height: 60px;">{{batch.batch_notes}}</textarea>
 
     </div>
 </div>
-<div class="row" ng-show="batch"> <!-- BATCH DATE HERE -->
-    <div class="col-md-4">made on : {{ batch.batch_date }}</div>
+<!-- BATCH CALCULATIONS HERE -->
+<div class="row" ng-show="batch"> 
+  <div class="col-md-6">
+    {{batchItems.length}} {{batchItems.length == 1 ? "item" : "items" }} in batch.
+    <mark> Total batch Cost {{ calculateBatchCost() || 0  | currency }} </mark>
+    &nbsp;&nbsp;&nbsp;&nbsp;Total batch Amount {{ calculateBatchAmounts()|| "uncalculated"  }} {{batch_units}}
+  </div>
+  <div class="col-md-6">
+    <span ng-if="containerCount>0">
+    &nbsp;&nbsp;Made {{containerCount}} {{containerCount == 1 ? "container" : "containers"}}
+  at ${{batchCostPerUnit}} per container
+    </span>
+  </div>
 </div>
-
 <!-- BATCH DETAILS HERE -->
 <table class="table table-bordered" ng-if="batchItems.length >= 1" >
     <thead>
@@ -69,18 +79,3 @@
       </tr>
     </tbody>
   </table>
-
-<div class="row" ng-show="batch"> <!-- BATCH CALCULATIONS HERE -->
-    <div class="col-md-6">
-    {{batchItems.length}} {{batchItems.length == 1 ? "item" : "items" }} in batch.
-    <mark> Total batch Cost {{ calculateBatchCost() || 0  | currency }} </mark>
-    &nbsp;&nbsp;&nbsp;&nbsp;Total batch Amount {{ calculateBatchAmounts()|| "uncalculated"  }} {{batch_units}}
-	</div>
-	<div class="col-md-6">
-	<span ng-if="containerCount>0">
-    &nbsp;&nbsp;Made {{containerCount}} {{containerCount == 1 ? "container" : "containers"}}
-	at ${{batchCostPerUnit}} per container
-  	</span>
-  	</div>
-
-</div>

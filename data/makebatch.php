@@ -70,7 +70,7 @@ if (!$result = $conn->query($sql)){
 	    $insert_sql[] = '("'
 	    	 .$batch_id .'","'
 	    	 . mysqli_real_escape_string($conn,$item->item_id).'","'
-	    	 . mysqli_real_escape_string($conn,$item->amount).'","'
+	    	 . (float)mysqli_real_escape_string($conn,$item->amount) * (float)$multiplier .'","'
 	    	 . mysqli_real_escape_string($conn,$item->unit).'","'
 	    	 . mysqli_real_escape_string($conn,$item->cost).'","'
 	    	 . mysqli_real_escape_string($conn,$item->description).'","'
@@ -82,7 +82,7 @@ if (!$result = $conn->query($sql)){
 	    	 .')';
 	}
 	 print_r('INSERT INTO batch_items (batch_id, item_id, amount, unit, cost, description, name, type, origin, vendor, vendorpartno) VALUES '.implode(',', $insert_sql));
-
+ 
 	$insert_result = $conn->query('INSERT INTO batch_items (batch_id, item_id, amount, unit, cost, description, name, type, origin, vendor, vendorpartno) VALUES '.implode(',', $insert_sql));
 	 echo "insert result is : " , $insert_result,"\n";
 
@@ -99,6 +99,9 @@ foreach ($request->recipe_items as $item){
 	$vendorpartno = mysqli_real_escape_string($conn,$item->vendorpartno);
 	$origin = mysqli_real_escape_string($conn,$item->origin);
 	$cost = mysqli_real_escape_string($conn,$item->cost);
+	print("item id: ".$item_id."\n");
+	print ("item name: ".$name."\n");
+	print ("amount : ".$amount." ".$unit."\n");
 	
 */
 	$amount = mysqli_real_escape_string($conn,$item->amount);

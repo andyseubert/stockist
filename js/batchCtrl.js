@@ -91,7 +91,15 @@ $scope.batchItems=[];
         return $scope.batchTotalAmount;
 
     }
+// UPDATE BATCH NOTES
+    $scope.updateBatchNotes=function(){
 
+        return $http.post('/data/updatebatchnotes.php',{ 'batch_id':$scope.batch.batch_id,'notes':$scope.batch.batch_notes })
+
+        .success(function(result){
+            $log.log(result);
+        });
+    };
 
 
 // end of controller
