@@ -274,7 +274,7 @@ $scope.copyRecipe=function(){
         // call out to copyrecipe.php
         // send {'old_recipe_name':'$scope.recipe.name','new_recipe_name':'" + result + "','recipe_notes':'$scope.recipe.notes'}
         $tempdata={'recipe_id':$scope.recipe.recipe_id , 'old_recipe_name':$scope.recipe.name,'new_recipe_name':result,'recipe_notes':$scope.recipe.notes}
-        //$log.log("will post ", $tempdata);
+        $log.log("will post ", $tempdata);
         return $http.post('/data/copyrecipe.php',$tempdata)
             .success(function(result){
                 $log.log(result);
