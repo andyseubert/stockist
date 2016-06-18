@@ -33,7 +33,7 @@
 <span ng-if="recipeItems.length>0" >
     {{recipeItems.length}} {{recipeItems.length == 1 ? "item" : "items" }} in recipe.
     <mark> Total recipe Cost {{ calculateRecipeCost() || 0  | currency }} </mark>
-    &nbsp;&nbsp;&nbsp;&nbsp;Total Recipe Amount {{ calculateRecipeAmounts()|| "uncalculated"  }} {{recipe_units}}
+    &nbsp;&nbsp;&nbsp;&nbsp;Total Recipe Amount {{ calculateRecipeAmounts() || "uncalculated"  }} {{recipe_units}}
 	<span ng-if="containerCount>0">
     &nbsp;&nbsp;Makes {{containerCount}} {{containerCount == 1 ? "container" : "containers"}}
 	at ${{recipeCostPerUnit}} per container

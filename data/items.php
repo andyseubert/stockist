@@ -1,6 +1,6 @@
 <?php
 require_once('connect.php');
-$allitemssql="select * from items";
+$allitemssql="select * from items ORDER BY name";
 $allitems = $conn->query($allitemssql);
 
 $rows = array();
