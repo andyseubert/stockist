@@ -95,15 +95,15 @@
 	<tr ng-repeat="item in items|orderBy:orderByField:reverseSort">
 	    <td><a href=''  ng-click="deleteItem( {'item_id':item.item_id } )"><img src="deleteme.png" width=20 height=20 id="deleteme"/></a></td>
 	    <td ng-hide="1">{{$index}}</td>
-	    <td e-style="width: 30px" editable-text="item.quantity" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'quantity','value':item.quantity} )">{{ item.quantity }}</td>
-	    <td editable-text="item.unit" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'unit','value':item.unit} )">{{ item.unit }}</td>
-	    <td editable-text="item.name"  buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'name','value':item.name} )">{{ item.name }}</td>
-	    <td editable-text="item.vendor" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'vendor','value':item.vendor} )">{{ item.vendor }}</td>
-	    <td editable-text="item.vendorpartno" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'vendorpartno','value':item.vendorpartno} )">{{ item.vendorpartno }}</td>
-	    <td editable-text="item.type" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'type','value':item.type} )">{{ item.type }}</td>
-	    <td editable-text="item.cost" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'cost','value':item.cost} )">{{ item.cost | currency }}</td>
-	    <td editable-text="item.origin" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'origin','value':item.origin} )">{{ item.origin }}</td>
-	    <td editable-text="item.description" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'description','value':item.description} )">{{ item.description }}</td>
+	    <td><span e-style="width: 30px" editable-text="item.quantity" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'quantity','value':item.quantity} )">{{ item.quantity }}</span></td>
+	    <td><span  editable-text="item.unit" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'unit','value':item.unit} )">{{ item.unit }}</span></td>
+	    <td><span  editable-text="item.name"  buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'name','value':item.name} )">{{ item.name }}</span></td>
+	    <td><span  editable-text="item.vendor" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'vendor','value':item.vendor} )">{{ item.vendor  || '__' }}</span></td>
+	    <td><span  editable-text="item.vendorpartno" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'vendorpartno','value':item.vendorpartno} )">{{ item.vendorpartno  || '__'  }}</span></td>
+	    <td><span  editable-text="item.type" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'type','value':item.type} )">{{ item.type  || '__'  }}</span></td>
+	    <td><span  editable-text="item.cost" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'cost','value':item.cost} )">{{ item.cost | currency }}</span></td>
+	    <td><span  editable-text="item.origin" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'origin','value':item.origin} )">{{ item.origin  || '__'  }}</span></td>
+	    <td><span  editable-text="item.description" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'description','value':item.description} )">{{ item.description  || '__'  }}</span></td>
 	</tr>
     </tbody>
 </table>
