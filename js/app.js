@@ -2,7 +2,7 @@
 
 var myApp = angular.module('myApp',[]);
 
-myApp = angular.module('myApp',['ngRoute','ui.bootstrap','xeditable','ngBootbox']);
+myApp = angular.module('myApp',['ngRoute','ui.bootstrap','xeditable']);
 
 // xeditable options
 myApp.run(function(editableOptions,editableThemes) {
