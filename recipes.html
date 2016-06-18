@@ -18,7 +18,7 @@
     <p><a href="#" ng-click="copyRecipe()" >+copyThisRecipe+</a>  
   </div>
   <div class="row">
-  <div class="col-md-12" >
+  <div class="col-md-6 offset:6" >
     NOTES: <textarea ng-model="recipe.notes" ng-change="updateRecipeNotes()" name="notes" e-rows="12" e-cols="60" style="margin: 0px; width: 415px; height: 60px;">{{srecipe.notes}}</textarea>
 
   </div>  
@@ -99,7 +99,7 @@
 	<td  class="hidden-print" ><a href='' ng-click="removeRecipeItem( {'recipe_id':recipeitem.recipe_id,'item_id':recipeitem.item_id } )" ><img src="deleteme.png" width=20 height=20 id="deleteme" ></img></a></td>
         <td  class="hidden-print" style="display: none;">{{$index}}</td>
 	<td ng-class="{danger: recipeitem.stockqty < (recipeitem.amount * batch.multiplier) , success: recipeitem.stockqty >= (recipeitem.amount * batch.multiplier)} ">{{recipeitem.name}}</td>
-        <td  buttons="no" editable-text="recipeitem.amount" onaftersave="updateRecipeItem( {'recipe_id':recipe_id,'item_id':recipeitem.item_id,'value':recipeitem.amount} )">{{(recipeitem.amount * batch.multiplier)}} {{recipeitem.unit}}</td>
+        <td><span  buttons="no" editable-text="recipeitem.amount" onaftersave="updateRecipeItem( {'recipe_id':recipe_id,'item_id':recipeitem.item_id,'value':recipeitem.amount} )">{{(recipeitem.amount * batch.multiplier)}} {{recipeitem.unit}}</span></td>
         <td>{{recipeitem.type}}</td>
         <td>{{recipeitem.cost}} per {{recipeitem.unit}}</td>
         <td>{{recipeitem.vendor}}+{{recipeitem.vendorpartno}}</td>
