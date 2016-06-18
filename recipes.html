@@ -95,7 +95,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="recipeitem in recipeItems|orderBy:orderByField:reverseSort" ng-if="recipeItems.length >= 1">
+      <tr ng-repeat="recipeitem in recipeItems" ng-if="recipeItems.length >= 1">
 	<td  class="hidden-print" ><a href='' ng-click="removeRecipeItem( {'recipe_id':recipeitem.recipe_id,'item_id':recipeitem.item_id } )" ><img src="deleteme.png" width=20 height=20 id="deleteme" ></img></a></td>
         <td  class="hidden-print" style="display: none;">{{$index}}</td>
 	<td ng-class="{danger: recipeitem.stockqty < (recipeitem.amount * batch.multiplier) , success: recipeitem.stockqty >= (recipeitem.amount * batch.multiplier)} ">{{recipeitem.name}}</td>
