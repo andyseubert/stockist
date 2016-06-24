@@ -32,7 +32,10 @@
     </div>
     <!--  BATCH COSTS CALCULATED AND DISPLAYED HERE -->
     <div class="col-md-4 col-md-offset-8">
-      Batch::multiply recipe amounts by :  <span e-style="width: 30px" editable-text="batch.multiplier" onaftersave="calculateBatch()">{{batch.multiplier}}</span>
+      Batch::multiply recipe amounts by :   
+      <!-- <span editable-text="batch.multiplier" e-form="textBtnForm" onaftersave="calculateBatch()">{{batch.multiplier}}</span>
+      <button class="btn  btn-default btn-xs" ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible">edit</button> -->
+      <input type='text' size="2" value="{{batch.multiplier}}" e-style="width: 30px" editable-text="batch.multiplier" onaftersave="calculateBatch()" />
     </div>
     <div class="col-md-4 col-md-offset-8">
        Batch Cost: {{ batch.multiplier  * recipeTotalCost | currency }}
@@ -45,7 +48,7 @@
     </div>
     <div class="col-md-4 col-md-offset-8">
        <!-- MAKE RECORD OF BATCH PRODUCED -->
-       <a ng-click="makeBatch()">MAKE THIS BATCH</a>
+       <a class="btn  btn-default btn-sm" ng-click="makeBatch()">MAKE THIS BATCH</a>
     </div>
 
      </div>
@@ -69,54 +72,47 @@
       <thead>
         <tr>
           <th width="20" class="hidden-print" ><center>-</center></th>
-          <th style="display: none;"  class="hidden-print" ><span ng-show="orderByField == 'index'">index</span></th>
+          <th style="display: none;"  class="hidden-print" >index</th>
           <th>
-            <a class="hidden-print" href="" ng-click="orderByField='name'; reverseSort = !reverseSort">
-              Item Name <span ng-show="orderByField == 'name'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-            </a><span class="visible-print-inline">Item Name</span>
+            Item Name<span class="visible-print-inline">Item Name</span>
           </th>
           <th>
-            <a class="hidden-print" href="" ng-click="orderByField='amount'; reverseSort = !reverseSort">
-              amount <span ng-show="orderByField == 'amount'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-            </a><span class="visible-print-inline">amount</span>
+            amount<span class="visible-print-inline">amount</span>
           </th>
           <th>
             units<span class="visible-print-inline">units</span>
           </th>
           <th>
-            <a class="hidden-print" href="" ng-click="orderByField='type'; reverseSort = !reverseSort">
-              type <span ng-show="orderByField == 'type'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-            </a><span class="visible-print-inline">type</span>
+            Type<span class="visible-print-inline">type</span>
           </th>
           <th>
-            <a class="hidden-print" href="" ng-click="orderByField='cost'; reverseSort = !reverseSort">
-              cost per<span ng-show="orderByField == 'cost'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-            </a><span class="visible-print-inline">cost per</span>
+            cost per<span class="visible-print-inline">cost per</span>
           </th>
           <th>
-            <a class="hidden-print" href="" ng-click="orderByField='vendor'; reverseSort = !reverseSort">
-              vendor+part<span ng-show="orderByField == 'vendor'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-            </a><span class="visible-print-inline">vendor+part</span>
+            vendor+part<span class="visible-print-inline">vendor+part</span>
           </th>
           <th>
-            <a class="hidden-print" href="" ng-click="orderByField='total'; reverseSort = !reverseSort">
-              total <span ng-show="orderByField == 'total'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-            </a><span class="visible-print-inline">total</span>
+            Total<span class="visible-print-inline">total</span>
           </th>
           <th class="hidden-print" >
-            <a href="" ng-click="orderByField='stockqty'; reverseSort = !reverseSort">
-              stockQty <span ng-show="orderByField == 'stockqty'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-            </a>
+              stockQty 
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="recipeitem in recipeItems|orderBy:orderByField:reverseSort" ng-if="recipeItems.length >= 1">
+        <tr ng-repeat="recipeitem in recipeItems " ng-if="recipeItems.length >= 1">
          <td  class="hidden-print" ><a href='' ng-click="removeRecipeItem( {'recipe_id':recipeitem.recipe_id,'item_id':recipeitem.item_id } )" ><img src="deleteme.png" width=20 height=20 id="deleteme" ></img></a></td>
          <td  class="hidden-print" style="display: none;">{{$index}}</td>
          <td ng-class="{danger: recipeitem.stockqty < (recipeitem.amount * batch.multiplier) , success: recipeitem.stockqty >= (recipeitem.amount * batch.multiplier)} ">{{recipeitem.name}}</td>
-         <td><span  buttons="no" editable-text="recipeitem.amount" onaftersave="updateRecipeItem( {'recipe_id':recipe_id,'item_id':recipeitem.item_id,'value':recipeitem.amount} )">{{(recipeitem.amount * batch.multiplier)}}</span></td>
-         <td>{{recipeitem.unit}}</td>
+         <td>
+          <input type='text' size="3"  value="{{(recipeitem.amount * batch.multiplier)}}" buttons="no" editable-text="recipeitem.amount"  e-style="width: 30px" onaftersave="updateRecipeItem( {'recipe_id':recipe_id,'item_id':recipeitem.item_id,'value':recipeitem.amount} )" />
+         </td>
+
+<!--
+         <td><span  buttons="no" editable-text="recipeitem.amount"  e-style="width: 30px" onaftersave="updateRecipeItem( {'recipe_id':recipe_id,'item_id':recipeitem.item_id,'value':recipeitem.amount} )">{{(recipeitem.amount * batch.multiplier)}}</span></td>
+-->
+
+         <td>{{ recipeitem.unit == "g" ? "grams" : recipeitem.unit }}</td>
          <td>{{recipeitem.type}}</td>
          <td>{{recipeitem.cost}} per {{recipeitem.unit}}</td>
          <td>{{recipeitem.vendor}}+{{recipeitem.vendorpartno}}</td>
@@ -125,3 +121,7 @@
        </tr>
      </tbody>
    </table>
+   <hr />
+<pre>
+  {{recipeItems | json}}
+</pre>

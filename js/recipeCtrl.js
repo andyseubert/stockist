@@ -60,10 +60,10 @@ angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filte
                     $scope.recipeItems=result;
                     $log.log("reciptItems from data: " , $scope.recipeItems );
                     //$log.log("length of result: " + $scope.recipeItems.length);
-                    $scope.calculateStockQty();
-                    $scope.calculateBatch();
-                    $scope.calculateRecipeCost();
-                    $scope.calculateRecipeAmounts();
+                    //$scope.calculateStockQty();
+                    //$scope.calculateBatch();
+                    //$scope.calculateRecipeCost();
+                    //$scope.calculateRecipeAmounts();
                 }else{ // error or maybe brand new recipe
                     $log.log("problem from data: " + result);
                 }
