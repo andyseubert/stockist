@@ -32,7 +32,7 @@ $request = json_decode($postdata);
 
 $sql = "INSERT INTO items
 ( name,quantity,vendor,vendorpartno,cost,unit,size,size_unit,type,origin,description )
-VALUES ( '$name','$quantity','$vendor','$vendorpartno','$cost','$unit','$size','size_unit',$type','$origin','$description' ) ";
+VALUES ( '$name','$quantity','$vendor','$vendorpartno','$cost','$unit','$size','$size_unit','$type','$origin','$description' ) ";
 
 $newItem = $conn->query($sql);
    if ($conn->error){ 
