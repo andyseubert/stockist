@@ -12,6 +12,8 @@ $request = json_decode($postdata);
 [vendorpartno] => 123
 [cost] => .5
 [unit] => ea
+[size] => 2.21
+[size_unit] => oz
 [type] => type
 [origin] => origin
 [description] => descr
@@ -22,13 +24,15 @@ $request = json_decode($postdata);
 @$vendorpartno = mysqli_real_escape_string($conn,($request->vendorpartno));
 @$cost = mysqli_real_escape_string($conn,($request->cost));
 @$unit = mysqli_real_escape_string($conn,($request->unit));
+@$size = mysqli_real_escape_string($conn,($request->size));
+@$size_unit = mysqli_real_escape_string($conn,($request->size_unit));
 @$type = mysqli_real_escape_string($conn,($request->type));
 @$origin = mysqli_real_escape_string($conn,($request->origin));
 @$description = mysqli_real_escape_string($conn,($request->description));
 
 $sql = "INSERT INTO items
-( name,quantity,vendor,vendorpartno,cost,unit,type,origin,description )
-VALUES ( '$name','$quantity','$vendor','$vendorpartno','$cost','$unit','$type','$origin','$description' ) ";
+( name,quantity,vendor,vendorpartno,cost,unit,size,size_unit,type,origin,description )
+VALUES ( '$name','$quantity','$vendor','$vendorpartno','$cost','$unit','$size','size_unit',$type','$origin','$description' ) ";
 
 $newItem = $conn->query($sql);
    if ($conn->error){ 
