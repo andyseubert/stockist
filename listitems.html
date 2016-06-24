@@ -29,8 +29,8 @@
 			<td><input type="text" ng-model="newitem.vendor"></td>
 			<td><input type="text" ng-model="newitem.vendorpartno" size="6"></td>
 			<td><input type="text" ng-model="newitem.cost" size="4"></td>
-			<td><input type="text" ng-model="newitem.unit" size="4"></td>
-			<td><input type="text" ng-model="newitem.size" size="4"></td>
+			<td><input type="text" ng-model="newitem.unit" size="4" value="g"></td>
+			<td><input type="text" ng-model="newitem.size" size="4" ></td>
 			<td><input type="text" ng-model="newitem.size_unit" size="4"></td>
 			<td><input type="text" ng-model="newitem.type"></td>
 			<td><input type="text" ng-model="newitem.origin"></td>
@@ -110,7 +110,7 @@
 				<td><a href=''  ng-click="deleteItem( {'item_id':item.item_id } )"><img src="deleteme.png" width=20 height=20 id="deleteme"/></a></td>
 				<td ng-hide="1">{{$index}}</td>
 				<td><span e-style="width: 30px" editable-text="item.quantity" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'quantity','value':item.quantity} )">{{ item.quantity || 0 }}</span></td>
-				<td><span  e-style="width: 30px" editable-text="item.unit" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'unit','value':item.unit} )">{{ item.unit }}</span></td>
+				<td><span  e-style="width: 30px" editable-text="item.unit" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'unit','value':item.unit} )">{{ item.unit == "g" ? "grams" : item.unit }}</span></td>
 				<td><span  editable-text="item.name"  buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'name','value':item.name} )">{{ item.name }}</span></td>
 				<td><span  editable-text="item.vendor" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'vendor','value':item.vendor} )">{{ item.vendor  || '__' }}</span></td>
 				<td><span e-style="width: 50px"  editable-text="item.vendorpartno" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'vendorpartno','value':item.vendorpartno} )">{{ item.vendorpartno  || '__'  }}</span></td>
