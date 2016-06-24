@@ -32,17 +32,16 @@
     </div>
     <!--  BATCH COSTS CALCULATED AND DISPLAYED HERE -->
     <div class="col-md-4 col-md-offset-8">
-      Batch size:  <span e-style="width: 30px" editable-text="batch.multiplier" onaftersave="calculateBatch()">{{batch.multiplier}}</span>
-      <span ng-if="batch.multiplier !=1"> {{batch.multiplier == 1 ? "recipe" : "recipes"}}
+      Batch::multiply recipe amounts by :  <span e-style="width: 30px" editable-text="batch.multiplier" onaftersave="calculateBatch()">{{batch.multiplier}}</span>
     </div>
     <div class="col-md-4 col-md-offset-8">
        Batch Cost: {{ batch.multiplier  * recipeTotalCost | currency }}
     </div>
     <div class="col-md-4 col-md-offset-8">
-       Batch Makes: {{ batch.multiplier * recipeTotalAmount }} {{batch.units}}
+       Batch Total Amt: {{ batch.multiplier * recipeTotalAmount }} {{batch.units || "grams" }}
     </div>
     <div class="col-md-4 col-md-offset-8">
-       Fills: {{ batch.multiplier * containerCount }} things</span>
+       Fills: this many __  xx units sized things</span>
     </div>
     <div class="col-md-4 col-md-offset-8">
        <!-- MAKE RECORD OF BATCH PRODUCED -->
@@ -82,6 +81,9 @@
             </a><span class="visible-print-inline">amount</span>
           </th>
           <th>
+            units<span class="visible-print-inline">units</span>
+          </th>
+          <th>
             <a class="hidden-print" href="" ng-click="orderByField='type'; reverseSort = !reverseSort">
               type <span ng-show="orderByField == 'type'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
             </a><span class="visible-print-inline">type</span>
@@ -113,7 +115,8 @@
          <td  class="hidden-print" ><a href='' ng-click="removeRecipeItem( {'recipe_id':recipeitem.recipe_id,'item_id':recipeitem.item_id } )" ><img src="deleteme.png" width=20 height=20 id="deleteme" ></img></a></td>
          <td  class="hidden-print" style="display: none;">{{$index}}</td>
          <td ng-class="{danger: recipeitem.stockqty < (recipeitem.amount * batch.multiplier) , success: recipeitem.stockqty >= (recipeitem.amount * batch.multiplier)} ">{{recipeitem.name}}</td>
-         <td><span  buttons="no" editable-text="recipeitem.amount" onaftersave="updateRecipeItem( {'recipe_id':recipe_id,'item_id':recipeitem.item_id,'value':recipeitem.amount} )">{{(recipeitem.amount * batch.multiplier)}} {{recipeitem.unit}}</span></td>
+         <td><span  buttons="no" editable-text="recipeitem.amount" onaftersave="updateRecipeItem( {'recipe_id':recipe_id,'item_id':recipeitem.item_id,'value':recipeitem.amount} )">{{(recipeitem.amount * batch.multiplier)}}</span></td>
+         <td>{{recipeitem.unit}}</td>
          <td>{{recipeitem.type}}</td>
          <td>{{recipeitem.cost}} per {{recipeitem.unit}}</td>
          <td>{{recipeitem.vendor}}+{{recipeitem.vendorpartno}}</td>

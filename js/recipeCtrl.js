@@ -178,10 +178,14 @@ angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filte
         })
 
         .success(function(result){
-            //$log.log(result);
-        });
+            //$log.log(result); 
 
-    calculateRecipeCost();
+        });
+// even if it doesn't succeed, update all the things
+        $scope.calculateStockQty();
+        $scope.calculateBatch();
+        $scope.calculateRecipeCost();
+        $scope.calculateRecipeAmounts();
         };
 
 // UPDATE RECIPE NOTES
@@ -264,7 +268,13 @@ angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filte
 
     }
        
-
+// watch the items for changes to update the totals
+$scope.$watch('recipeItems',function(){
+        $scope.calculateStockQty();
+        $scope.calculateBatch();
+        $scope.calculateRecipeCost();
+        $scope.calculateRecipeAmounts();
+},true)
 
         // change recipe name
 
@@ -312,7 +322,7 @@ $scope.batch={};
 $scope.batch.recipe = $scope.recipe;
 $scope.batch.items  = [];
 $scope.batch.items  = $scope.recipeItems;
-$scope.batch.multiplier=1;
+//$scope.batch.multiplier=1;
 
 
 $scope.calculateBatch=function(){
@@ -342,7 +352,6 @@ $scope.makeBatch=function(){
         });
     return;
 }
-
 
 
 // end of controller
