@@ -122,9 +122,12 @@
      </tbody>
    </table>
    <hr />
-
-<a href="" ng-click="showme=true">Show Raw JSON</a>
-  <button ng-click="showme=false">Hide it!</button> 
-<pre ng-show="showme">
-  {{recipeItems | json}}
-</pre>
+<!-- DEBUG BELOW HERE -->
+<div ng-show="recipe" >
+  <a href="" ng-click="showme=true">Show Raw JSON</a>
+    <button ng-click="showme=false">Hide it!</button> 
+  <pre ng-show="showme">
+    {{recipe|json}}
+    {{recipeItems | json}}
+  </pre>
+</div>
