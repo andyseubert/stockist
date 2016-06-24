@@ -33,7 +33,20 @@ angular.module('myApp').controller('inventoryItemCtrl',['$scope','$log','$http',
     
     
     // add item to inventory
-    $scope.newitem={};
+    $scope.newitem={
+        'name':'',
+        'unit':'g',
+        'quantity':0,
+        'vendor':'Liberty Natural',
+        'vendorpartno':'',
+        'cost':'',
+        'size':'',
+        'size_unit':'',
+        'type':'ESSENTIAL OIL',
+        'origin':'',
+        'description':''
+    };
+
     $scope.addItem = function() {
 	// 
 	
