@@ -9,14 +9,15 @@
 <table ng-show="showAdd" class="table table-bordered">
 	<thead>
 		<tr>
+			<th>container</th>
 			<th>name</th>
 			<th width="4">qty</th>
 			<th>unit</th>
 			<th>vendor</th>
 			<th>vendorpartno</th>
 			<th>cost</th>
-			<th>size</th>
-			<th>size unit</th>
+			<th>cntnr size</th>
+			<th>cntnr unit</th>
 			<th>type</th>
 			<th>origin</th>
 			<th>description</th>
@@ -24,6 +25,9 @@
 	</thead>
 	<tbody>
 		<tr>
+			<td><input type="checkbox" ng-model="newitem.iscontainer" [name="iscontainer"]
+       [ng-true-value="1"]
+       [ng-false-value="0"]></td>
 			<td><input type="text" ng-model="newitem.name" ></td>
 			<td><input type="text" ng-model="newitem.quantity" size="4"></td>
 			<td><input type="text" ng-model="newitem.unit" size="4"></td>
@@ -31,7 +35,7 @@
 			<td><input type="text" ng-model="newitem.vendorpartno" size="6"></td>
 			<td><input type="text" ng-model="newitem.cost" size="4"></td>
 			<td><input type="text" ng-model="newitem.size" size="4" ></td>
-			<td><input type="text" ng-model="newitem.size_unit" size="4"></td>
+			<td><input type="text" ng-model="newitem.container_unit" size="4"></td>
 			<td><input type="text" ng-model="newitem.type"></td>
 			<td><input type="text" ng-model="newitem.origin"></td>
 			<td><input type="text" ng-model="newitem.description"></td>
@@ -85,12 +89,12 @@
 				</th>
 				<th>
 					<a href="" ng-click="orderByField='size'; reverseSort = !reverseSort">
-						size <span ng-show="orderByField == 'size'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+						cntnr size <span ng-show="orderByField == 'size'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
 					</a>
 				</th>
 				<th>
-					<a href="" ng-click="orderByField='size_unit'; reverseSort = !reverseSort">
-						size unit<span ng-show="orderByField == 'size_unit'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+					<a href="" ng-click="orderByField='container_unit'; reverseSort = !reverseSort">
+						cntnr unit<span ng-show="orderByField == 'container_unit'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
 					</a>
 				</th>
 				<th>
@@ -117,7 +121,7 @@
 				<td><span  editable-text="item.type" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'type','value':item.type} )">{{ item.type  || '__'  }}</span></td>
 				<td><span e-style="width: 60px"  editable-text="item.cost" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'cost','value':item.cost} )">{{ item.cost | currency }}</span></td>
 				<td><span e-style="width: 30px"  editable-text="item.size" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'size','value':item.size} )">{{ item.size  || '__' }}</span></td>
-				<td><span e-style="width: 30px"  editable-text="item.size_unit" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'size_unit','value':item.size_unit} )">{{ item.size_unit  || '__' }}</span></td>
+				<td><span e-style="width: 30px"  editable-text="item.size_unit" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'container_unit','value':item.container_unit} )">{{ item.container_unit  || '__' }}</span></td>
 				<td><span  editable-text="item.origin" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'origin','value':item.origin} )">{{ item.origin  || '__'  }}</span></td>
 				<td><span  editable-text="item.description" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'description','value':item.description} )">{{ item.description  || '__'  }}</span></td>
 			</tr>
