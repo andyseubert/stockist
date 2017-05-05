@@ -49,7 +49,7 @@ angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filte
         // populates the list of items from the given recipe_id
         $scope.recipeItems=[];
         //reset the batch
-        $scope.batch.multiplier=1;
+        $scope.resetBatch();
 
         // should only be sending me the recipe_id as { 'recipe_id':## }
         //$log.log("attempting to select recipe by id here");
@@ -58,7 +58,7 @@ angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filte
             .success(function(result){
                 if (angular.isObject(result)) {  // crazy ?
                     $scope.recipeItems=result;
-                    $log.log("reciptItems from data: " , $scope.recipeItems );
+                    //$log.log("reciptItems from data: " , $scope.recipeItems );
                     //$log.log("length of result: " + $scope.recipeItems.length);
                     //$scope.calculateStockQty();
                     //$scope.calculateBatch();
@@ -308,7 +308,7 @@ $scope.copyRecipe=function(){
 
         $scope.selectRecipe( { 'recipe_id':$scope.$newrecipe_id } );
 
-
+        
         return;
     }, function() {
         console.log('Prompt dismissed!');
@@ -318,18 +318,28 @@ $scope.copyRecipe=function(){
 
 // BATCH FUNCTIONS BELOW HERE
 // map batch objects to recipe objects
-$scope.batch={};
-$scope.batch.recipe = $scope.recipe;
-$scope.batch.items  = [];
-$scope.batch.items  = $scope.recipeItems;
-//$scope.batch.multiplier=1;
+$scope.resetBatch=function(){
+    $scope.batch={};
+    $scope.batch.recipe = $scope.recipe;
+    $scope.batch.items  = [];
+    $scope.batch.items  = $scope.recipeItems;
+    $scope.batch.multiplier=1;
+    $scope.batch.containerSize=1;
+    $scope.batch.containerCount;
+    $scope.batch.units="grams";
+    return;
+}
 
 
 $scope.calculateBatch=function(){
   $scope.batch.amount=(parseFloat($scope.batch.multiplier) * parseFloat($scope.recipeTotalAmount));
+  $scope.batch.amount=Math.round($scope.batch.amount * 100) / 100
   $scope.batch.cost = (parseFloat($scope.batch.multiplier) * parseFloat($scope.recipeTotalCost));
-  $log.log("batch.multiplier is " + $scope.batch.multiplier);
+  $scope.batch.cost = Math.round($scope.batch.cost  * 100) / 100
+  //$log.log("batch.multiplier is " + $scope.batch.multiplier);
   $scope.batch.units = $scope.recipe_units;
+  $scope.batch.containerCount=Math.round((parseFloat($scope.batch.amount) / parseFloat($scope.batch.containerSize))*100)/100;
+  //$log.log("containerCount:" + $scope.batch.containerCount);
   /*
   $log.log ("calculated batch amount is " + $scope.batch.amount);
   $log.log("calculated batch cost is "+ $scope.batch.cost);
