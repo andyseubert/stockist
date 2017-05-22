@@ -1,8 +1,6 @@
 
 angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filter','$ngBootbox', function($scope,$log,$http,$filter,$ngBootbox){
 
-
-
     // manage recipes with this controller
 // also calculate and save a batch. a batch is a recipe multiplied by 1 or more times (or even by a fraction)
     // need to know about the items
@@ -25,6 +23,7 @@ angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filte
     // get all recipes
     //$scope.recipes={};
     $scope.recipeItems=[];
+    $scope.batch={};
 
     $http.get('/data/getrecipes.php')
             .success(function(result){
@@ -332,6 +331,7 @@ $scope.resetBatch=function(){
 
 
 $scope.calculateBatch=function(){
+
   $scope.batch.amount=(parseFloat($scope.batch.multiplier) * parseFloat($scope.recipeTotalAmount));
   $scope.batch.amount=Math.round($scope.batch.amount * 100) / 100
   $scope.batch.cost = (parseFloat($scope.batch.multiplier) * parseFloat($scope.recipeTotalCost));
