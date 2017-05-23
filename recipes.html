@@ -38,7 +38,7 @@
     BATCH VALUES:<br>
      Cost: {{ batch.multiplier  * recipeTotalCost | currency }}<br>
    
-     Total Amt: {{ batch.multiplier * recipeTotalAmount }} {{batch.units || "grams" }}<br>
+     Total Amt: {{ batch.multiplier * recipeTotalAmount }} {{ batch.units || "grams" }}<br>
    
      Fills: {{ batch.containerCount }}  <input type='text' size="2" value="{{batch.containerSize}}" e-style="width: 30px" editable-text="batch.containerSize" onaftersave="calculateBatch()" />{{ batch.units }} sized vessels<br>
   </div>
@@ -59,28 +59,28 @@
 
 
 <!-- RECIPE DETAILS HERE -->
-<table class="table table-bordered" ng-if="recipeItems.length >= 1" >
+<table class="table table-bordered table-sm table-responsive"  ng-if="recipeItems.length >= 1" >
   <thead>
     <tr>
       <th width="20" class="hidden-print" ><center>-</center></th>
       <th style="display: none;"  class="hidden-print" >index</th>
       <th>
+        amount/qty
+      </th>
+      <th>
         Item Name
-      </th>
-      <th>
-        amount
-      </th>
-      <th>
-        units
       </th>
       <th>
         Type
       </th>
       <th>
+        vendor+part
+      </th>
+      <th>
         cost per
       </th>
       <th>
-        vendor+part
+        description
       </th>
       <th>
         Total
@@ -94,19 +94,27 @@
     <tr ng-repeat="recipeitem in recipeItems " ng-if="recipeItems.length >= 1">
      <td  class="hidden-print" ><a href='' ng-click="removeRecipeItem( {'recipe_id':recipeitem.recipe_id,'item_id':recipeitem.item_id } )" ><img src="deleteme.png" width=20 height=20 id="deleteme" ></img></a></td>
      <td  class="hidden-print" style="display: none;">{{$index}}</td>
-     <td ng-class="{danger: recipeitem.stockqty < (recipeitem.amount * batch.multiplier) , success: recipeitem.stockqty >= (recipeitem.amount * batch.multiplier)} ">{{recipeitem.name}}</td>
+<!-- amount and units ( 4 grams )-->    
      <td>
-      <input type='text' size="3"  value="{{(recipeitem.amount * batch.multiplier)}}" buttons="no" editable-text="recipeitem.amount"  e-style="width: 30px" onaftersave="updateRecipeItem( {'recipe_id':recipe_id,'item_id':recipeitem.item_id,'value':recipeitem.amount} )" />
+      <span e-style="width: 30px" buttons="no" editable-text="recipeitem.amount" onaftersave="updateRecipeItem( {'recipe_id':recipe_id,'item_id':recipeitem.item_id,'value':recipeitem.amount} )" style="font-size:110%;" >
+      {{(recipeitem.amount * batch.multiplier)}}
+      </span>
+      {{ recipeitem.unit == "g" ? "grams" : recipeitem.unit }} 
     </td>
+<!-- name -->
+     <td ng-class="{danger: recipeitem.stockqty < (recipeitem.amount * batch.multiplier) , success: recipeitem.stockqty >= (recipeitem.amount * batch.multiplier)} ">{{recipeitem.name}}</td>
+
 
 <!--
          <td><span  buttons="no" editable-text="recipeitem.amount"  e-style="width: 30px" onaftersave="updateRecipeItem( {'recipe_id':recipe_id,'item_id':recipeitem.item_id,'value':recipeitem.amount} )">{{(recipeitem.amount * batch.multiplier)}}</span></td>
        -->
-
-       <td>{{ recipeitem.unit == "g" ? "grams" : recipeitem.unit }}</td>
        <td>{{recipeitem.type}}</td>
-       <td>{{recipeitem.cost}} per {{recipeitem.unit}}</td>
        <td>{{recipeitem.vendor}}+{{recipeitem.vendorpartno}}</td>
+<!-- cost per unit -->
+       <td>{{recipeitem.cost}} per {{recipeitem.unit}}</td>
+<!-- description -->
+       <td> {{recipeitem.description}} </td>
+<!-- total -->
        <td>{{recipeitem.cost * recipeitem.amount | currency }}</td>
        <td ng-class="{danger: recipeitem.stockqty < recipeitem.amount , success: recipeitem.stockqty >= recipeitem.amount} " ><span class="hidden-print"  >{{recipeitem.stockqty}}</span></td>
      </tr>
