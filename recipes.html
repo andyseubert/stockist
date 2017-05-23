@@ -33,7 +33,7 @@
       <input type='text' size="2" value="{{batch.multiplier}}" e-style="width: 30px" editable-text="batch.multiplier" onaftersave="calculateBatch()" /><br>
     </div>
      <!-- MAKE RECORD OF BATCH PRODUCED -->
-     <a class="btn  btn-default btn-sm hidden-print" ng-click="makeBatch()">MAKE A BATCH OF THIS</a><br>
+     <a class="btn  btn-default btn-sm hidden-print" ng-click="makeBatch()">Make a Batch of {{recipe.name}}</a><br>
     
     BATCH VALUES:<br>
      Cost: {{ batch.multiplier  * recipeTotalCost | currency }}<br>
