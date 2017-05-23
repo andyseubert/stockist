@@ -96,7 +96,7 @@
      <td  class="hidden-print" style="display: none;">{{$index}}</td>
 <!-- amount and units ( 4 grams )-->    
      <td>
-      <span e-style="width: 30px" buttons="no" editable-text="recipeitem.amount" onaftersave="updateRecipeItem( {'recipe_id':recipe_id,'item_id':recipeitem.item_id,'value':recipeitem.amount} )" style="font-size:110%;" >
+      <span e-style="width: 30px;" buttons="no" editable-text="recipeitem.amount" onaftersave="updateRecipeItem( {'recipe_id':recipe_id,'item_id':recipeitem.item_id,'value':recipeitem.amount} )" style="font-size:14px;color:black;" >
       {{(recipeitem.amount * batch.multiplier)}}
       </span>
       {{ recipeitem.unit == "g" ? "grams" : recipeitem.unit }} 
