@@ -41,6 +41,7 @@
      Total Amt: {{ batch.multiplier * recipeTotalAmount }} {{ batch.units || "grams" }}<br>
    
      Fills: {{ batch.containerCount }}  <input type='text' size="2" value="{{batch.containerSize}}" e-style="width: 30px" editable-text="batch.containerSize" onaftersave="calculateBatch()" />{{ batch.units }} sized vessels<br>
+     Cost per each container : {{ (batch.multiplier  * recipeTotalCost)/batch.containerCount | currency }}
   </div>
    
 </div>
