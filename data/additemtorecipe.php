@@ -26,8 +26,23 @@ if ( $exists->num_rows > 0 ) {
 	print json_encode($rows);
 	// seems to persist after deletion...
 }else{
-
-    $sql="INSERT INTO recipe_item_x (item_id,recipe_id) VALUES ('".$item_id."','".$recipe_id."')";
+    // retrieve the last position value
+    $sql="SELECT MAX (position) FROM recipe_item_x WHERE recipe_id = ".$recipe_id;
+    $conn->query($sql);
+    if ($conn->error){
+        print_r($conn->error);
+    }else{
+        $result=$conn->query($sql);
+        print_r("position MAX result: ".$result);
+        // if not null, make it 1, if has a value then add 1 to it
+        while($row = $result->fetch_assoc()) {
+            $position = $row["position"]; 
+            print_r("position returned: ".$position);           
+        }
+        if ( $position > 0 ) { $position = $position +1; }
+        else { $position = 1; }
+    }
+    $sql="INSERT INTO recipe_item_x (position,item_id,recipe_id) VALUES ('".$position."','".$item_id."','".$recipe_id."')";
     $conn->query($sql);
     if ($conn->error){
         print_r($conn->error);

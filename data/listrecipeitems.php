@@ -10,7 +10,7 @@ $request = json_decode($postdata);
 @$recipe_id = mysqli_real_escape_string($conn,($request->recipe_id));
 //print_r($request);
 
-$recipeitems = $conn->query("select * from items, recipe_item_x where recipe_item_x.recipe_id = ".$recipe_id." AND items.item_id = recipe_item_x.item_id ORDER BY recipe_item_x.item_id");
+$recipeitems = $conn->query("select * from items, recipe_item_x where recipe_item_x.recipe_id = ".$recipe_id." AND items.item_id = recipe_item_x.item_id ORDER BY recipe_item_x.position");
 if ($conn->error){
     echo $conn->error ;
 }else if($recipeitems->num_rows >0 ){

@@ -5,18 +5,35 @@ angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filte
 // also calculate and save a batch. a batch is a recipe multiplied by 1 or more times (or even by a fraction)
     // need to know about the items
 
-    // get list of all items
-    $http.get('/data/items.php')
+// get a list of all item TYPES first for choosing items to add
+$scope.types = [];
+    $http.get('/data/types.php')
             .success(function(result){
-                $scope.items = result; // items set to GET result here
-                //$log.info("in itemService here");
-                //$log.log(result);
+                $scope.types = result; // types set to GET result here
             })
             .error(function(result, status){
-                $scope.items = status;
+                $scope.types = status;
                 $log.log(status);
 
             });
+
+
+// get the list of all items OF A SELECTED TYPE
+// SELECT * FROM `items` WHERE LOWER(selectedtype) = LOWER(type)
+
+    // get list of all items
+    $scope.getItemsNames = function(selectedType){
+
+        $log.log('looking for type : ' + selectedType.name);
+        $http.post('/data/listitemsbytype.php',{'type':selectedType.name})
+            .success(function(result){
+                if (angular.isObject(result)) {  // crazy ?
+                    $scope.items=result;
+                }else{ // error 
+                    $log.log("problem from data: " + result);
+                }
+            });
+    };
 
         //$log.info ($scope.items);
 
@@ -44,7 +61,7 @@ angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filte
 
 
     //display chosen recipe
-    $scope.selectRecipe =function(data){
+    $scope.selectRecipe = function(data){
         // populates the list of items from the given recipe_id
         $scope.recipeItems=[];
         //reset the batch
