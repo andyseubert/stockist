@@ -4,6 +4,23 @@ angular.module('myApp').controller('recipeCtrl',['$scope','$log','$http','$filte
     // manage recipes with this controller
 // also calculate and save a batch. a batch is a recipe multiplied by 1 or more times (or even by a fraction)
     // need to know about the items
+// need all items in order to check stock?
+// perhaps checking stock should be a data function instead if the memory is too much.
+// for now though:
+
+    // get list of all items
+    $http.get('/data/items.php')
+            .success(function(result){
+                $scope.items = result; // items set to GET result here
+                //$log.info("in itemService here");
+                //$log.log(result);
+            })
+            .error(function(result, status){
+                $scope.items = status;
+                $log.log(status);
+
+            });
+
 
 // get a list of all item TYPES first for choosing items to add
 $scope.types = [];
@@ -21,14 +38,14 @@ $scope.types = [];
 // get the list of all items OF A SELECTED TYPE
 // SELECT * FROM `items` WHERE LOWER(selectedtype) = LOWER(type)
 
-    // get list of all items
+    // get list of all items for selecting to add 
     $scope.getItemsNames = function(selectedType){
 
         $log.log('looking for type : ' + selectedType.name);
         $http.post('/data/listitemsbytype.php',{'type':selectedType.name})
             .success(function(result){
                 if (angular.isObject(result)) {  // crazy ?
-                    $scope.items=result;
+                    $scope.itemsNames=result;
                 }else{ // error 
                     $log.log("problem from data: " + result);
                 }
@@ -129,9 +146,9 @@ $scope.types = [];
             // php will check for duplicates in db
             $http.post('/data/additemtorecipe.php',{'item_id':additem_id.item_id,'recipe_id':$scope.recipe.recipe_id})
             .success(function(result){
+                $log.log("add item to recipe result from php: " + result);
                 if ( angular.isObject(result) ) { // empty means there was a duplicate
                     // find the item object from the items we have and push it onto the recipeItems
-                    $log.log("add item to recipe result from php: " + result);
                     var matchedItem = $filter('filter')($scope.items, function(value, index) {return value.item_id == additem_id.item_id;})[0];
                     if (matchedItem) {
 
@@ -143,7 +160,7 @@ $scope.types = [];
                         $log.log ("item not matched..");
                     }
                 }else{
-                    $log.log("no object returned add item to recipe result from php: " + result);
+                    $log.log("Attempted to add duplicate item: "+status );
                     // alert the user here that they tried to add a duplicate
                 }
             })

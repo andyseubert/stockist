@@ -18,42 +18,39 @@ $checksql = "SELECT * from recipe_item_x WHERE item_id='".$item_id."' and recipe
 $exists = $conn->query($checksql);
 if ( $exists->num_rows > 0 ) {
     // already exists
-    print_r($exists);
-	$rows = array(); 	
-	while($row = $exists->fetch_assoc()){
-		$rows[] = $row;
-	}
-	print json_encode($rows);
+    print_r("exists");
+	// $rows = array(); 	
+	// while($row = $exists->fetch_assoc()){
+	// 	$rows[] = $row;
+	// }
+	// print json_encode($rows);
 	// seems to persist after deletion...
 }else{
-    // retrieve the last position value
-    $sql="SELECT MAX (position) FROM recipe_item_x WHERE recipe_id = ".$recipe_id;
+    // retrieve the MAX position value
+    $sql="SELECT count(*) FROM recipe_item_x WHERE recipe_id = ".$recipe_id;
     $conn->query($sql);
     if ($conn->error){
-        print_r($conn->error);
+        print_r("error: " . $conn->error);
     }else{
         $result=$conn->query($sql);
-        print_r("position MAX result: ".$result);
+        //print_r("position MAX result: ".$result);
         // if not null, make it 1, if has a value then add 1 to it
-        while($row = $result->fetch_assoc()) {
-            $position = $row["position"]; 
-            print_r("position returned: ".$position);           
-        }
-        if ( $position > 0 ) { $position = $position +1; }
-        else { $position = 1; }
+        $position = $result->fetch_row(); 
+        //print_r("position returned: ".$position[0]."\n");  
+        if ( $position[0] > 0 ) { $position = $position[0] +1; }else{ $position = 1; }
+        //print_r("new position: ".$position."\n");
     }
-    $sql="INSERT INTO recipe_item_x (position,item_id,recipe_id) VALUES ('".$position."','".$item_id."','".$recipe_id."')";
-    $conn->query($sql);
+
+    $addsql="INSERT INTO recipe_item_x (position,item_id,recipe_id) VALUES ('".$position."','".$item_id."','".$recipe_id."')";
+    $conn->query($addsql);
     if ($conn->error){
         print_r($conn->error);
     }else{
         // now get the item by id and return it
-        
+        //print_r("added item\n");
         $exists = $conn->query($checksql);
-        if ( $exists->num_rows > 0 ) {
-                
-            $rows = array(); 
-            
+        if ( $exists->num_rows > 0 ) {                
+            $rows = array();             
             while($row = $exists->fetch_assoc()){
                 $rows[] = $row;
             }

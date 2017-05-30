@@ -53,10 +53,11 @@
 <div class="row"  ng-show="recipe">
  <!-- ADD ITEM TO RECIPE      -->
  <div class="col-md-8 hidden-print">
-Select ingredient Type: <select ng-model="selectedType" ng-options="type.name for type in types" ng-change="getItemsNames(selectedType)">
+CATEGORY&nbsp;&nbsp;&nbsp;<select ng-model="selectedType" ng-options="type.name for type in types" ng-change="getItemsNames(selectedType)">
   <option value="">Choose Type</option>
 </select>
- select ingredient <select ng-model="additem_id" ng-options="item.name for item in items" ng-change="addItemToRecipe(additem_id)">
+  <br />
+INGREDIENT <select ng-model="additem_id" ng-options="item.name for item in itemsNames" ng-change="addItemToRecipe(additem_id)">
    <option value="">Choose Below</option>
  </select> 
 </div>

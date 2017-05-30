@@ -9,7 +9,7 @@ $request = json_decode($postdata);
 @$type = mysqli_real_escape_string($conn,($request->type));
 //print_r($request);
 //print_r("select ProperCase(name) AS name from items WHERE ProperCase(type) = \'".$type."\';\n"  );
-$items = $conn->query("select ProperCase(name) AS name from items WHERE type = '".$type."';" );
+$items = $conn->query("select *,ProperCase(name) AS name from items WHERE type = '".$type."';" );
 
 if ($conn->error){
     echo $conn->error ;
