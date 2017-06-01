@@ -24,26 +24,26 @@
   <!-- RECIPE COSTS HERE -->
 
   <div class="col-md-5 col-md-offset-1">
-      {{recipeItems.length}} {{recipeItems.length == 1 ? "item" : "items" }} in recipe.<br>
-   
+    {{recipeItems.length}} {{recipeItems.length == 1 ? "item" : "items" }} in recipe.<br>
+    
     <!--  BATCH COSTS CALCULATED AND DISPLAYED HERE -->
     <div class="hidden-print">
       Adjust amounts for batch size. <br>
       multiply recipe amounts by :
-      <input type='text' size="2" value="{{batch.multiplier}}" e-style="width: 30px" editable-text="batch.multiplier" onaftersave="calculateBatch()" /><br>
+      <span e-style="width: 30px" editable-text="batch.multiplier" onaftersave="calculateBatch()" buttons="no" >{{batch.multiplier}}</span><br>
     </div>
-     <!-- MAKE RECORD OF BATCH PRODUCED -->
-     <a class="btn  btn-default btn-sm hidden-print" ng-click="makeBatch()">Make a Batch of {{recipe.name}}</a><br>
+    <!-- MAKE RECORD OF BATCH PRODUCED -->
+    <a class="btn  btn-default btn-sm hidden-print" ng-click="makeBatch()">Make a Batch of {{recipe.name}}</a><br>
     
     BATCH VALUES:<br>
-     Cost: {{ batch.multiplier  * recipeTotalCost | currency }}<br>
-   
-     Total Amt: {{ batch.multiplier * recipeTotalAmount }} {{ batch.units || "grams" }}<br>
-   
-     Fills: {{ batch.containerCount }}  <input type='text' size="2" value="{{batch.containerSize}}" e-style="width: 30px" editable-text="batch.containerSize" onaftersave="calculateBatch()" />{{ batch.units }} sized vessels<br>
-     Cost per each container : {{ (batch.multiplier  * recipeTotalCost)/batch.containerCount | currency }}
+    Cost: {{ batch.multiplier  * recipeTotalCost | currency }}<br>
+    
+    Total Amt: {{ batch.multiplier * recipeTotalAmount }} {{ batch.units || "grams" }}<br>
+    
+    Fills: {{ batch.containerCount }}  <input type='text' size="2" value="{{batch.containerSize}}" e-style="width: 30px" editable-text="batch.containerSize" onaftersave="calculateBatch()" />{{ batch.units }} sized vessels<br>
+    Cost per each container : {{ (batch.multiplier  * recipeTotalCost)/batch.containerCount | currency }}
   </div>
-   
+  
 </div>
 
 <!-- CHECK INVENTORY FOR BATCH MULTIPLIED AMOUNTS DISPLAY ANY DEFICIENCIES HERE -->
@@ -53,13 +53,13 @@
 <div class="row"  ng-show="recipe">
  <!-- ADD ITEM TO RECIPE      -->
  <div class="col-md-8 hidden-print">
-CATEGORY&nbsp;&nbsp;&nbsp;<select ng-model="selectedType" ng-options="type.name for type in types" ng-change="getItemsNames(selectedType)">
+  CATEGORY&nbsp;&nbsp;&nbsp;<select ng-model="selectedType" ng-options="type.name for type in types" ng-change="getItemsNames(selectedType)">
   <option value="">Choose Type</option>
 </select>
-  <br />
+<br />
 INGREDIENT <select ng-model="additem_id" ng-options="item.name for item in itemsNames" ng-change="addItemToRecipe(additem_id)">
-   <option value="">Choose Below</option>
- </select> 
+<option value="">Choose Below</option>
+</select> 
 </div>
 <!-- END ADD ITEM -->
 </div>
@@ -99,17 +99,21 @@ INGREDIENT <select ng-model="additem_id" ng-options="item.name for item in items
   </thead>
   <tbody>
     <tr ng-repeat="recipeitem in recipeItems " ng-if="recipeItems.length >= 1">
-     <td  class="hidden-print" ><a href='' ng-click="removeRecipeItem( {'recipe_id':recipeitem.recipe_id,'item_id':recipeitem.item_id } )" ><img src="deleteme.png" width=20 height=20 id="deleteme" ></img></a></td>
-     <td  class="hidden-print" style="display: none;">{{$index}}</td>
-<!-- amount and units ( 4 grams )-->    
-     <td>
+     <td  class="hidden-print" >
+       <a href='' ng-click="removeRecipeItem( {'recipe_id':recipeitem.recipe_id,'item_id':recipeitem.item_id } )" >
+        <i class="fa fa-trash" aria-label="remove Recipe Item" style="color:black" ></i>
+      </a>
+    </td>
+    <td  class="hidden-print" style="display: none;">{{$index}}</td>
+    <!-- amount and units ( 4 grams )-->    
+    <td>
       <span e-style="width: 30px;" buttons="no" editable-text="recipeitem.amount" onaftersave="updateRecipeItem( {'recipe_id':recipe_id,'item_id':recipeitem.item_id,'value':recipeitem.amount} )" style="font-size:14px;color:black;" >
-      {{(recipeitem.amount * batch.multiplier)}}
+        {{(recipeitem.amount * batch.multiplier)}}
       </span>
       {{ recipeitem.unit == "g" ? "grams" : recipeitem.unit }} 
     </td>
-<!-- name -->
-     <td ng-class="{danger: recipeitem.stockqty < (recipeitem.amount * batch.multiplier) , success: recipeitem.stockqty >= (recipeitem.amount * batch.multiplier)} ">{{recipeitem.name}}</td>
+    <!-- name -->
+    <td ng-class="{danger: recipeitem.stockqty < (recipeitem.amount * batch.multiplier) , success: recipeitem.stockqty >= (recipeitem.amount * batch.multiplier)} ">{{recipeitem.name}}</td>
 
 
 <!--
@@ -117,11 +121,11 @@ INGREDIENT <select ng-model="additem_id" ng-options="item.name for item in items
        -->
        <td>{{recipeitem.type}}</td>
        <td>{{recipeitem.vendor}}+{{recipeitem.vendorpartno}}</td>
-<!-- cost per unit -->
+       <!-- cost per unit -->
        <td>{{recipeitem.cost}} per {{recipeitem.unit}}</td>
-<!-- description -->
+       <!-- description -->
        <td> {{recipeitem.description}} </td>
-<!-- total -->
+       <!-- total -->
        <td>{{recipeitem.cost * recipeitem.amount | currency }}</td>
        <td ng-class="{danger: recipeitem.stockqty < recipeitem.amount , success: recipeitem.stockqty >= recipeitem.amount} " ><span class="hidden-print"  >{{recipeitem.stockqty}}</span></td>
      </tr>

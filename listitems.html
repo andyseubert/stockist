@@ -9,16 +9,16 @@
 <table ng-show="showAdd" class="table table-bordered">
 	<thead>
 		<tr>
-			<th>name</th>
-			<th width="4">qty</th>
-			<th>unit</th>
-			<th>vendor</th>
-			<th>vendorpartno</th>
-			<th>cost</th>
-			<th>size</th>
-			<th>type</th>
-			<th>origin</th>
-			<th>description</th>
+			<th class="text-center" >name</th>
+			<th  class="text-center" width="4">qty</th>
+			<th class="text-center" >unit</th>
+			<th class="text-center" >vendor</th>
+			<th class="text-center" >vendorpartno</th>
+			<th class="text-center" >cost</th>
+			<th class="text-center" >size</th>
+			<th class="text-center" >category</th>
+			<th class="text-center" >origin</th>
+			<th class="text-center" >description</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -51,7 +51,7 @@
 						QTY <span ng-show="orderByField == 'quantity'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
 					</a>
 				</th>
-				<th>
+				<th class="text-black">
 					<a href="" ng-click="orderByField='unit'; reverseSort = !reverseSort">
 						unit <span ng-show="orderByField == 'unit'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
 					</a>
@@ -73,7 +73,7 @@
 				</th>
 				<th>
 					<a href="" ng-click="orderByField='type'; reverseSort = !reverseSort">
-						Type <span ng-show="orderByField == 'type'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+						Category <span ng-show="orderByField == 'type'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
 					</a>
 				</th>
 				<th>
@@ -100,7 +100,8 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="item in items|orderBy:orderByField:reverseSort">
-				<td><a href=''  ng-click="deleteItem( {'item_id':item.item_id } )"><img src="deleteme.png" width=20 height=20 id="deleteme"/></a></td>
+				<td><a href=''  ng-click="deleteItem( {'item_id':item.item_id } )">
+				        <i class="fa fa-trash" aria-label="remove Recipe Item" style="color:black" ></i>
 				<td ng-hide="1">{{$index}}</td>
 				<td><span e-style="width: 30px" editable-text="item.quantity" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'quantity','value':item.quantity} )">{{ item.quantity || 0 }}</span></td>
 				<td><span  e-style="width: 30px" editable-text="item.unit" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'unit','value':item.unit} )">{{ item.unit == "g" ? "grams" : item.unit }}</span></td>
