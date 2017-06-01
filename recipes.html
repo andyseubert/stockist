@@ -25,7 +25,7 @@
 
   <div class="col-md-5 col-md-offset-1">
     {{recipeItems.length}} {{recipeItems.length == 1 ? "item" : "items" }} in recipe.<br>
-    
+
     <!--  BATCH COSTS CALCULATED AND DISPLAYED HERE -->
     <div class="hidden-print">
       Adjust amounts for batch size. <br>
@@ -37,13 +37,15 @@
     
     BATCH VALUES:<br>
     Cost: {{ batch.multiplier  * recipeTotalCost | currency }}<br>
-    
+
     Total Amt: {{ batch.multiplier * recipeTotalAmount }} {{ batch.units || "grams" }}<br>
-    
-    Fills: {{ batch.containerCount }}  <input type='text' size="2" value="{{batch.containerSize}}" e-style="width: 30px" editable-text="batch.containerSize" onaftersave="calculateBatch()" />{{ batch.units }} sized vessels<br>
+
+    Fills: {{ batch.containerCount }}  
+    <span e-style="width: 30px" editable-text="batch.containerSize" onaftersave="calculateBatch()" buttons="no" >{{batch.containerSize}}</span>
+    {{ batch.units }} sized vessels<br>
     Cost per each container : {{ (batch.multiplier  * recipeTotalCost)/batch.containerCount | currency }}
   </div>
-  
+
 </div>
 
 <!-- CHECK INVENTORY FOR BATCH MULTIPLIED AMOUNTS DISPLAY ANY DEFICIENCIES HERE -->
